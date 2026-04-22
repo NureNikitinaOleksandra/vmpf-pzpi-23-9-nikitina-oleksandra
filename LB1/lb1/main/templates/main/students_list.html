@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block info %}
+<div>
+  <button style="margin-bottom: 15px">
+    <a href="{% url 'import_csv' %}">Завантажити студентів з CSV</a>
+  </button>
+  <button>
+    <a href="{% url 'student_report' %}"> Генерувати звіт про успішність </a>
+  </button>
+</div>
+
+<div class="students-container">
+  {% for student in students %}
+  <div
+    class="student-card"
+    style="border: 1px solid #ccc; margin-bottom: 15px; padding: 10px"
+  >
+    <h2>
+      <a href="{% url 'student_detail' student.id %}"
+        >{{ student.full_name }} (Група: {{ student.group.name }})</a
+      >
+    </h2>
+
+    <h3>Оцінки:</h3>
+    <ul>
+      {% for grade in student.grade_set.all %}
+      <li>{{ grade.subject.title }}: <b>{{ grade.value }}</b></li>
+      {% empty %}
+      <li>Оцінок поки немає</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

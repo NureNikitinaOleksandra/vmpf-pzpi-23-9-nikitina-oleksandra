@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block info %}
+<h1>Профіль студента: {{ student.full_name }}</h1>
+
+{% if student.photo %}
+<img
+  src="{{ student.photo.url }}"
+  alt="Фото {{ student.full_name }}"
+  style="max-width: 200px"
+/>
+{% else %}
+<p><i>Фото відсутнє</i></p>
+{% endif %}
+
+<ul>
+  <li><b>Група:</b> {{ student.group.name }}</li>
+  <li><b>Телефон:</b> {{ student.phone|default:"Не вказано" }}</li>
+  <li><b>Email:</b> {{ student.email|default:"Не вказано" }}</li>
+  <li><b>Адреса:</b> {{ student.address|default:"Не вказано" }}</li>
+  <li>
+    <b>Оцінки:</b>
+    <ul>
+      {% for grade in student.grade_set.all %}
+      <li>{{ grade.subject.title }}: <b>{{ grade.value }}</b></li>
+      {% empty %}
+      <li>Оцінок поки немає</li>
+      {% endfor %}
+    </ul>
+  </li>
+</ul>
+
+<a href="{% url 'students_list' %}">Повернутися до списку</a>
+{% endblock %}

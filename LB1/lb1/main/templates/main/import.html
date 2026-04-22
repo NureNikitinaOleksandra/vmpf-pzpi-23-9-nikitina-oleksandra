@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block info %}
+<h2>Імпорт студентів з CSV</h2>
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <input type="file" name="csv_file" required />
+  <button type="submit">Завантажити</button>
+</form>
+
+<br />
+<a href="{% url 'students_list' %}">Повернутися до списку</a>
+{% endblock %}

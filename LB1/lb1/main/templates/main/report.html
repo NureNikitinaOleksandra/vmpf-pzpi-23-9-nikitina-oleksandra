@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block info %}
+<h1>Звіт про успішність студентів</h1>
+
+<a href="{% url 'students_list' %}">Повернутися до списку</a>
+
+<div style="width: 80%; margin: 20px auto">
+  <canvas id="performanceChart"></canvas>
+</div>
+
+<div style="display: flex; justify-content: center">
+  <table
+    border="1"
+    style="width: 80%; border-collapse: collapse; margin-top: 30px auto"
+  >
+    <tr style="background-color: #f2f2f2">
+      <th>ПІБ Студента</th>
+      <th>Група</th>
+      <th>Середній бал</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+      <td>{{ student.full_name }}</td>
+      <td>{{ student.group.name }}</td>
+      <td>{{ student.avg_grade|floatformat:1|default:"Немає оцінок" }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const names = JSON.parse("{{ names|safe|escapejs }}");
+  const averages = JSON.parse("{{ averages|safe|escapejs }}");
+
+  new Chart(document.getElementById("performanceChart"), {
+    type: "bar",
+    data: {
+      labels: names,
+      datasets: [
+        {
+          label: "Середній бал",
+          data: averages,
+        },
+      ],
+    },
+  });
+</script>
+{% endblock %}
