@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Прогноз погоди</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #e0f7fa;
+        margin: 0;
+      }
+      .weather-card {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 300px;
+      }
+      .temp {
+        font-size: 48px;
+        font-weight: bold;
+        margin: 10px 0;
+        color: #333;
+      }
+      .desc {
+        text-transform: capitalize;
+        font-size: 20px;
+        color: #666;
+      }
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="weather-card">
+      <h2>Погода у Харкові</h2>
+      <div id="weatherInfo">Завантаження даних...</div>
+    </div>
+
+    <script>
+      async function fetchWeather() {
+        const apiKey = "c84715078c0f046bb177c7887eea44ca";
+
+        // const city = "Kharkiv";
+
+        // const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&lang=ua&units=metric`;
+
+        // Координати Харкова у десятковому форматі
+        const lat = 49.9808;
+        const lon = 36.2527;
+
+        // URL з використанням lat та lon
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&lang=ua&units=metric`;
+
+        try {
+          const response = await fetch(url);
+
+          if (!response.ok) {
+            throw new Error("Помилка: Невірний API-ключ або місто не знайдено");
+          }
+
+          const data = await response.json();
+
+          const temp = Math.round(data.main.temp);
+          const description = data.weather[0].description;
+          const iconCode = data.weather[0].icon;
+
+          const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+          const weatherContainer = document.getElementById("weatherInfo");
+          weatherContainer.innerHTML = `
+                    <img src="${iconUrl}" alt="Іконка погоди">
+                    <div class="temp">${temp}°C</div>
+                    <div class="desc">${description}</div>
+                `;
+        } catch (error) {
+          document.getElementById("weatherInfo").innerHTML =
+            `<p class="error">${error.message}</p>`;
+          console.error(error);
+        }
+      }
+
+      fetchWeather();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "title": "Чистий код",
+    "author": "Роберт Мартін",
+    "genre": "Класика",
+    "status": "read",
+    "rating": "none",
+    "addedAt": "2025-12-27T00:31:59.477Z"
+  },
+  {
+    "id": 2,
+    "title": "1984",
+    "author": "Джордж Оруелл",
+    "genre": "Детектив",
+    "status": "planned",
+    "rating": "none",
+    "addedAt": "2025-06-26T16:13:58.301Z"
+  },
+  {
+    "id": 3,
+    "title": "Дюна",
+    "author": "Френк Герберт",
+    "genre": "Програмування",
+    "status": "planned",
+    "rating": "none",
+    "addedAt": "2026-03-27T14:39:53.708Z"
+  },
+  {
+    "id": 4,
+    "title": "Володар перснів",
+    "author": "Дж.Р.Р. Толкін",
+    "genre": "Фантастика",
+    "status": "reading",
+    "rating": "none",
+    "addedAt": "2025-11-29T05:13:54.687Z"
+  },
+  {
+    "id": 5,
+    "title": "Мистецтво війни",
+    "author": "Сунь Цзи",
+    "genre": "Фентезі",
+    "status": "read",
+    "rating": "awesome",
+    "addedAt": "2026-02-03T20:06:44.027Z"
+  },
+  {
+    "id": 6,
+    "title": "Ессенціалізм",
+    "author": "Ґреґ Маккеон",
+    "genre": "Фентезі",
+    "status": "planned",
+    "rating": "none",
+    "addedAt": "2026-03-20T13:40:21.891Z"
+  },
+  {
+    "id": 7,
+    "title": "Гаррі Поттер",
+    "author": "Дж.К. Роулінг",
+    "genre": "Детектив",
+    "status": "read",
+    "rating": "none",
+    "addedAt": "2025-11-26T21:02:12.223Z"
+  },
+  {
+    "id": 8,
+    "title": "Шерлок Холмс",
+    "author": "Артур Конан Дойл",
+    "genre": "Програмування",
+    "status": "read",
+    "rating": "normal",
+    "addedAt": "2026-01-18T15:27:21.003Z"
+  },
+  {
+    "id": 9,
+    "title": "Кобзар",
+    "author": "Тарас Шевченко",
+    "genre": "Фентезі",
+    "status": "planned",
+    "rating": "none",
+    "addedAt": "2026-04-23T05:26:38.221Z"
+  },
+  {
+    "id": 10,
+    "title": "Алгоритми",
+    "author": "Томас Кормен",
+    "genre": "Психологія",
+    "status": "read",
+    "rating": "bad",
+    "addedAt": "2026-02-22T10:33:09.060Z"
+  }
+]
