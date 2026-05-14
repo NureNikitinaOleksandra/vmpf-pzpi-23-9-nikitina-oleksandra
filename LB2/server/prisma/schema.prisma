@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Рівень 3: Система користувачів
+model User {
+  id        Int            @id @default(autoincrement())
+  email     String         @unique
+  password  String
+  name      String
+  role      Role           @default(USER)
+  playlists Playlist[]
+  reviews   Review[]
+  logs      AnalyticsLog[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+// Рівень 1 & 2: Треки та Жанри
+model Track {
+  id        Int            @id @default(autoincrement())
+  title     String
+  artist    String
+  filePath  String // Шлях до фізичного mp3 файлу на сервері
+  duration  Int? // Тривалість у секундах
+  genre     Genre          @relation(fields: [genreId], references: [id])
+  genreId   Int
+  playlists Playlist[] // Many-to-many зв'язок
+  reviews   Review[]
+  logs      AnalyticsLog[]
+}
+
+model Genre {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  tracks Track[]
+}
+
+// Рівень 2: Плейлисти (Many-to-many з Track)
+model Playlist {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  user        User    @relation(fields: [userId], references: [id])
+  userId      Int
+  tracks      Track[] // Prisma сама створить проміжну таблицю
+}
+
+// Рівень 3: Відгуки до треків
+model Review {
+  id        Int      @id @default(autoincrement())
+  text      String
+  rating    Int // Наприклад, 1-5
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  track     Track    @relation(fields: [trackId], references: [id])
+  trackId   Int
+  createdAt DateTime @default(now())
+}
+
+// Рівень 4: Аналітика (Відстеження прослуховувань)
+model AnalyticsLog {
+  id         Int      @id @default(autoincrement())
+  user       User?    @relation(fields: [userId], references: [id])
+  userId     Int? // Робимо необов'язковим, бо дозволено слухати без авторизації
+  track      Track    @relation(fields: [trackId], references: [id])
+  trackId    Int
+  listenedAt DateTime @default(now())
+}
